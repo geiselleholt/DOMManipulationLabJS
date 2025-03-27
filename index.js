@@ -16,9 +16,9 @@ topMenuEl.style.height = "100%";
 topMenuEl.style.backgroundColor = "var(--top-menu-bg)";
 topMenuEl.classList.add("flex-around");
 
-menuLinks.forEach((link) => {
+menuLinks.forEach((menuLink) => {
   let linkEl = document.createElement("a");
-  linkEl.setAttribute("href", link.href);
-  linkEl.textContent = link.text;
+  linkEl.setAttribute("href", menuLink.href);
+  linkEl.textContent = menuLink.text;
   topMenuEl.appendChild(linkEl);
 });
