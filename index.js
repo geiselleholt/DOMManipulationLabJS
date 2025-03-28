@@ -64,9 +64,21 @@ function handleTopMenuEl(e) {
     console.log(`You clicked ${e.target.textContent}`);
   }
 
-  topMenuLinks.forEach((element) => {
-    element.classList.remove("active");
+  topMenuLinks.forEach((link) => {
+    link.classList.remove("active");
   });
+
+  if (e.target.classList.contains("active") == false) {
+    menuLinks.forEach((element) => {
+      if (element.text == e.target.textContent) {
+        if (element.subLinks) {
+          subMenuEl.style.top = "100%";
+        } else {
+          subMenuEl.style.top = "0";
+        }
+      }
+    });
+  }
 
   e.target.classList.toggle("active");
 }
