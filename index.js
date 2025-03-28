@@ -69,16 +69,34 @@ function handleTopMenuEl(e) {
   });
 
   if (e.target.classList.contains("active") == false) {
-    menuLinks.forEach((element) => {
-      if (element.text == e.target.textContent) {
-        if (element.subLinks) {
+    e.target.classList.add("active");
+    menuLinks.forEach((link) => {
+      if (link.text == e.target.textContent) {
+        let subLinks2 = link.subLinks;
+        console.log(subLinks2);
+        if (subLinks2) {
           subMenuEl.style.top = "100%";
         } else {
           subMenuEl.style.top = "0";
         }
+        buildSubmenu(subLinks2);
       }
+    });
+  } else {
+    e.target.classList.remove("active");
+  }
+
+  function buildSubmenu(subLinks) {
+    subMenuEl.innerHTML = "";
+    subLinks.forEach((link) => {
+      let subLinkEl = document.createElement(`a`);
+      subLinkEl.setAttribute(`href`, link.href);
+      subLinkEl.textContent = link.text;
+      console.log(subLinkEl);
+      subMenuEl.append(subLinkEl);
     });
   }
 
-  e.target.classList.toggle("active");
+  console.log("Active class toggled:", e.target.classList.contains("active"));
+  console.log("Current active element:", e.target);
 }
