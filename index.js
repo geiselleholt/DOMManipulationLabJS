@@ -1,3 +1,4 @@
+// --------GIVEN DATA ---------------------------------------------------------
 var menuLinks = [
   { text: `about`, href: `/about` },
   {
@@ -27,6 +28,8 @@ var menuLinks = [
     ],
   },
 ];
+
+// -------- ---------------------------------------------------------
 
 let mainEL = document.querySelector(`main`);
 mainEL.style.backgroundColor = `var(--main-bg)`;
@@ -65,26 +68,31 @@ function handleTopMenuEl(e) {
   }
 
   topMenuLinks.forEach((link) => {
-    link.classList.remove(`active`);
+    if (e.target.classList.contains(`active`)) {
+      subMenuEl.style.top = 0;
+      return;
+    } else {
+      link.classList.remove(`active`);
+    }
   });
 
-  if (e.target.classList.contains(`active`) == false) {
-    e.target.classList.add(`active`);
+  if (e.target.classList.contains(`active`)) {
+    e.target.classList.remove(`active`);
+  } else {
     menuLinks.forEach((link) => {
-      if (link.text == e.target.textContent) {
-        let subLinks2 = link.subLinks;
-        console.log(subLinks2);
-        if (subLinks2) {
+      if (link.text === e.target.textContent) {
+        let subLinksEl = link.subLinks;
+        if (subLinksEl) {
           subMenuEl.style.top = `100%`;
-          buildSubmenu(subLinks2);
+          buildSubmenu(subLinksEl);
+          e.target.classList.add(`active`);
         } else {
           subMenuEl.style.top = `0`;
           mainEL.innerHTML = `<h1>ABOUT</h1>`;
+          e.target.classList.add(`active`);
         }
       }
     });
-  } else {
-    e.target.classList.remove(`active`);
   }
 
   function buildSubmenu(subLinks) {
@@ -93,7 +101,6 @@ function handleTopMenuEl(e) {
       let subLinkEl = document.createElement(`a`);
       subLinkEl.setAttribute(`href`, link.href);
       subLinkEl.textContent = link.text;
-      console.log(subLinkEl);
       subMenuEl.append(subLinkEl);
     });
   }
@@ -115,10 +122,7 @@ function handleTopMenuEl(e) {
     });
 
     if (e.target.textContent !== `about`) {
-      mainEL.innerHTML = e.target.textContent.toUpperCase();
+      mainEL.innerHTML = `<h1>${e.target.textContent.toUpperCase()}</h1>`;
     }
   }
-
-  console.log(`Active class toggled:`, e.target.classList.contains(`active`));
-  console.log(`Current active element:`, e.target);
 }
